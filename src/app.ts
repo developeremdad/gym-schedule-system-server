@@ -17,9 +17,7 @@ app.use(cookieParser())
 
 app.use(
   cors({
-    origin: [
-      'http://localhost:5173',
-    ],
+    origin: ['http://localhost:5173'],
     credentials: true,
   }),
 )
@@ -28,12 +26,12 @@ app.use(
 app.use('/api/v1', router)
 
 app.get('/', (_req: Request, res: Response) => {
-  res.send('Hi, Gym System Root Route Working !')
+  res.send('Hi, Gym Schedule System Root Route Working !')
 })
 
 app.use(globalErrorHandler)
 
-//Not Found
+// Global Not Found
 app.use(notFound)
 
 export default app

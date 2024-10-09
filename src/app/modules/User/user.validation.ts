@@ -3,21 +3,14 @@ import { UserRoleEnum } from './user.constant'
 
 const userValidationSchema = z.object({
   body: z.object({
-    name: z.string({ required_error: 'Name is required.' }),
-    phone: z.string({ required_error: 'Phone is required.' }),
-    email: z.string().email().optional(),
-    pasword: z
+    fullName: z.string({ required_error: 'Full name is required.' }),
+    email: z.string().email(),
+    password: z
       .string({
         invalid_type_error: 'Password must be string',
       })
       .max(20, { message: 'Password can not be more than 20 characters' })
-      .optional(),
-  }),
-})
-
-const changeStatusValidationSchema = z.object({
-  body: z.object({
-    // status: z.enum([...UserStatus] as [string, ...string[]]),
+      .min(5, { message: 'Password can be at least 5 characters' }),
   }),
 })
 
@@ -28,6 +21,5 @@ const updateUserRoleValidationSchema = z.object({
 })
 export const UserValidation = {
   userValidationSchema,
-  changeStatusValidationSchema,
   updateUserRoleValidationSchema,
 }

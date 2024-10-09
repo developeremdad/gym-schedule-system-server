@@ -38,19 +38,6 @@ const getMe = catchAsync(async (req, res) => {
   })
 })
 
-const changeStatus = catchAsync(async (req, res) => {
-  const phone = req.params.phone
-
-  const result = await UserServices.changeStatus(phone, req.body)
-
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'User status is updated successfully',
-    data: result,
-  })
-})
-
 const updateUserRole = catchAsync(async (req, res) => {
   const { id } = req.params
 
@@ -81,7 +68,6 @@ export const UserControllers = {
   createUser,
   getAllUsers,
   getMe,
-  changeStatus,
   updateUserRole,
   deleteUser,
 }

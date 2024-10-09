@@ -45,13 +45,6 @@ const getMe = async (phone: string, role: string) => {
   return await User.findOne({ phone, role })
 }
 
-const changeStatus = async (phone: string, payload: { status: string }) => {
-  const result = await User.findOneAndUpdate({ phone }, payload, {
-    new: true,
-  })
-  return result
-}
-
 const updateUserRoleIntoDB = async (id: string, payload: { role: string }) => {
   const user = await User.findById(id)
   if (!user) {
@@ -79,7 +72,6 @@ export const UserServices = {
   createUserIntoDB,
   getAllUsersFromDB,
   getMe,
-  changeStatus,
   updateUserRoleIntoDB,
   deleteUserIntoDB,
 }
