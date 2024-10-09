@@ -1,7 +1,7 @@
 import QueryBuilder from '../../builder/QueryBuilder'
 import { User } from '../User/user.model'
 
-const getAllTrainersFromDB = async (query: Record<string, unknown>) => {
+const getAllTraineesFromDB = async (query: Record<string, unknown>) => {
   const buildingQuery = new QueryBuilder(User.find(), query)
     .filter()
     .sort()
@@ -17,6 +17,6 @@ const getAllTrainersFromDB = async (query: Record<string, unknown>) => {
   }
 }
 
-export const TrainerServices = {
-  getAllTrainersFromDB,
+export const TraineeServices = {
+  getAllTraineesFromDB,
 }
