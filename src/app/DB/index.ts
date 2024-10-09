@@ -6,15 +6,15 @@ const adminUser = {
   fullName: 'admin',
   email: 'mdemdadullahammed@gmail.com',
   password: config.super_admin_password,
-  role: USER_ROLE.superAdmin,
+  role: USER_ROLE.admin,
 }
 
 const seedAdmin = async () => {
   //when database is connected, we will check is there any user who is super admin
-  const isAdminExits = await User.findOne({ role: USER_ROLE.superAdmin })
+  const isAdminExits = await User.findOne({ role: USER_ROLE.admin })
 
   if (!isAdminExits) {
-    // await User.create(adminUser)
+    await User.create(adminUser)
   }
 }
 

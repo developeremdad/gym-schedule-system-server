@@ -2,13 +2,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from 'http-status'
 import QueryBuilder from '../../builder/QueryBuilder'
+import config from '../../config'
 import AppError from '../../errors/AppError'
 import { TUser } from './user.interface'
 import { User } from './user.model'
 
 const createUserIntoDB = async (payload: TUser) => {
   //if password is not given , use default password
-  payload.password = payload.password || payload.email
+  payload.password = payload.password || (config.default_password as string)
 
   try {
     // create a user
