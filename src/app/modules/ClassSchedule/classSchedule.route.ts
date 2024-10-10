@@ -6,10 +6,16 @@ import { ClassScheduleControllers } from './classSchedule.controller'
 
 const router = express.Router()
 
+router.post(
+  '/create',
+  auth(USER_ROLE.admin),
+  ClassScheduleControllers.createClassSchedule,
+)
+
 router.get(
   '/get-class-schedules',
   auth(USER_ROLE.admin),
   ClassScheduleControllers.getAllClassSchedules,
 )
 
-export const TrainerRoutes = router
+export const ClassScheduleRoutes = router

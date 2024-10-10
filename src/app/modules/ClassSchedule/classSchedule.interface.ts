@@ -2,7 +2,9 @@ import mongoose from 'mongoose'
 
 export type TClassSchedule = {
   scheduleDate: Date
-  startTime: string // formatted as HH:mm
-  endTime: string // formatted as HH:mm
+  startTime: string
+  endTime: string
   trainer: mongoose.Types.ObjectId
+  trainees: mongoose.Types.ObjectId[]
+  maxTrainees: number
 }

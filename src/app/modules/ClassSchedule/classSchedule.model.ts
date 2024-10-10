@@ -5,20 +5,30 @@ const ClassScheduleSchema = new Schema<TClassSchedule>(
   {
     scheduleDate: {
       type: Date,
-      required: true,
+      required: [true, 'Schedule date is required'],
     },
     startTime: {
       type: String,
-      required: true,
+      required: [true, 'Start time is required'],
     },
     endTime: {
       type: String,
-      required: true,
+      required: [true, 'End time is required'],
     },
     trainer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+      required: [true, 'Trainer is required'],
+    },
+    trainees: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    maxTrainees: {
+      type: Number,
+      default: 10,
     },
   },
   {

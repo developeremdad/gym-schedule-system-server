@@ -7,7 +7,6 @@ import { User } from '../User/user.model'
 
 const createNewTraineeIntoDB = async (payload: TUser) => {
   payload.role = USER_ROLE.trainee
-  console.log(payload)
   try {
     // create a user as a trainer
     const newUser = await User.create([payload])

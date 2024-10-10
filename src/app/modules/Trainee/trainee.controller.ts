@@ -5,7 +5,6 @@ import sendResponse from '../../utils/sendResponse'
 import { TraineeServices } from './trainee.service'
 
 const createNewTrainee: RequestHandler = catchAsync(async (req, res) => {
-  console.log(req.body)
   const result = await TraineeServices.createNewTraineeIntoDB(req.body)
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
