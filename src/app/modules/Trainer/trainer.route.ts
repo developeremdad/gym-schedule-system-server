@@ -6,6 +6,11 @@ import { TrainerControllers } from './trainer.controller'
 
 const router = express.Router()
 
+router.post(
+  '/create',
+  auth(USER_ROLE.admin),
+  TrainerControllers.createNewTrainer,
+)
 router.get(
   '/get-trainers',
   auth(USER_ROLE.admin),

@@ -1,8 +1,8 @@
+import { RequestHandler } from 'express'
 import httpStatus from 'http-status'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { TrainerServices } from './trainer.service'
-import { RequestHandler } from 'express'
 
 const getAllTrainers: RequestHandler = catchAsync(async (req, res) => {
   const result = await TrainerServices.getAllTrainersFromDB(req.query)
@@ -15,6 +15,17 @@ const getAllTrainers: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 
+const createNewTrainer: RequestHandler = catchAsync(async (req, res) => {
+  const result = await TrainerServices.createNewTrainerIntoDB(req.body)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Create new trainer successfully',
+    data: result,
+  })
+})
+
 export const TrainerControllers = {
   getAllTrainers,
+  createNewTrainer,
 }

@@ -8,23 +8,27 @@ const userSchema = new Schema<TUser, UserModel>(
   {
     fullName: {
       type: String,
-      required: true,
+      required: [true, 'Full Name is required'],
       trim: true,
       lowercase: true,
     },
     email: {
       type: String,
-      required: true,
+      required: [true, 'Email is required'],
       unique: true,
     },
     password: {
       type: String,
-      required: true,
+      required: [true, 'Password is required'],
       select: 0,
     },
     role: {
       type: String,
-      enum: ['admin', 'trainer', 'trainee'],
+      required: [true, 'Role is required'],
+      enum: {
+        values: ['admin', 'trainer', 'trainee'],
+        message: '{VALUE} is not a valid role',
+      },
       default: 'trainee',
     },
   },

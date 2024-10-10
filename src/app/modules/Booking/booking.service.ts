@@ -44,7 +44,49 @@ export const createBookingIntoDB = async (payload: Record<string, unknown>) => {
     // await classSchedule.save()
 
     return result
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    throw new Error(err)
+  }
+}
+
+const cancelBookingIntoDB = async (bookingID: string) => {
+  try {
+    // Find the booking
+    const booking = await Booking.findById(bookingID)
+    if (!booking) {
+      throw new AppError(httpStatus.NOT_FOUND, 'Booking not found')
+    }
+
+    // Remove the trainee from the class schedule
+    // const classSchedule = await ClassSchedule.findById(booking.classSchedule)
+    // if (classSchedule) {
+    //   classSchedule.trainees = classSchedule.trainees.filter(
+    //     (traineeID) => traineeID.toString() !== booking.trainee.toString(),
+    //   )
+    //   await classSchedule.save()
+    // }
+
+    // Delete the booking
+    const result = await Booking.findByIdAndDelete(bookingID)
+
+    return result
+  } catch (err: any) {
+    throw new Error(err)
+  }
+}
+
+const getAllTraineeBookings = async (traineeID: string) => {
+  try {
+    // Find all bookings for the trainee
+    const bookings = await Booking.find({ trainee: traineeID }).populate(
+      'classSchedule',
+    )
+
+    if (!bookings.length) {
+      throw new AppError(httpStatus.NOT_FOUND, 'No bookings found')
+    }
+
+    return bookings
   } catch (err: any) {
     throw new Error(err)
   }
@@ -52,4 +94,6 @@ export const createBookingIntoDB = async (payload: Record<string, unknown>) => {
 
 export const BookingServices = {
   createBookingIntoDB,
+  cancelBookingIntoDB,
+  getAllTraineeBookings,
 }

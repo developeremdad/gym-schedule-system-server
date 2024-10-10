@@ -4,8 +4,8 @@ import { User } from '../modules/User/user.model'
 
 const adminUser = {
   fullName: 'admin',
-  email: 'mdemdadullahammed@gmail.com',
-  password: config.super_admin_password,
+  email: 'mdemdadullahahammed@gmail.com',
+  password: config.admin_password,
   role: USER_ROLE.admin,
 }
 
