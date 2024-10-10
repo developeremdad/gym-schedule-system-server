@@ -4,6 +4,17 @@ import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { TraineeServices } from './trainee.service'
 
+const createNewTrainee: RequestHandler = catchAsync(async (req, res) => {
+  console.log(req.body)
+  const result = await TraineeServices.createNewTraineeIntoDB(req.body)
+  sendResponse(res, {
+    statusCode: httpStatus.CREATED,
+    success: true,
+    message: 'Trainee register successfully',
+    data: result,
+  })
+})
+
 const getAllTrainees: RequestHandler = catchAsync(async (req, res) => {
   const result = await TraineeServices.getAllTraineesFromDB(req.query)
   sendResponse(res, {
@@ -16,5 +27,6 @@ const getAllTrainees: RequestHandler = catchAsync(async (req, res) => {
 })
 
 export const TraineeControllers = {
+  createNewTrainee,
   getAllTrainees,
 }

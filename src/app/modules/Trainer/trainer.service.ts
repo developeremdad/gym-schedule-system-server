@@ -16,7 +16,10 @@ const createNewTrainerIntoDB = async (payload: TUser) => {
 
     //create a user
     if (!newUser.length) {
-      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to register user')
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        'Failed to create new trainer user',
+      )
     }
 
     return newUser
