@@ -14,6 +14,22 @@ const createClassSchedule: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 
+const assigningTrainerToClassSchedule: RequestHandler = catchAsync(
+  async (req, res) => {
+    const result =
+      await ClassScheduleServices.assigningTrainerIntoClassSchedule(
+        req.body.trainerId,
+        req.params.classScheduleId,
+      )
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Assign trainer to Class schedule successfully',
+      data: result,
+    })
+  },
+)
+
 const getAllClassSchedules: RequestHandler = catchAsync(async (req, res) => {
   const result = await ClassScheduleServices.getAllClassScheduleFromDB(
     req.query,
@@ -29,5 +45,6 @@ const getAllClassSchedules: RequestHandler = catchAsync(async (req, res) => {
 
 export const ClassScheduleControllers = {
   createClassSchedule,
+  assigningTrainerToClassSchedule,
   getAllClassSchedules,
 }

@@ -12,6 +12,12 @@ router.post(
   ClassScheduleControllers.createClassSchedule,
 )
 
+router.patch(
+  '/assign-trainer/:classScheduleId',
+  auth(USER_ROLE.admin),
+  ClassScheduleControllers.assigningTrainerToClassSchedule,
+)
+
 router.get(
   '/get-class-schedules',
   auth(USER_ROLE.admin),

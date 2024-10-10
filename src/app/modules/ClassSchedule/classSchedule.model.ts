@@ -18,7 +18,6 @@ const ClassScheduleSchema = new Schema<TClassSchedule>(
     trainer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: [true, 'Trainer is required'],
     },
     trainees: [
       {

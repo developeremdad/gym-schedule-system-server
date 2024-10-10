@@ -1,19 +1,15 @@
 import httpStatus from 'http-status'
 import moment from 'moment-timezone'
+import mongoose from 'mongoose'
 import QueryBuilder from '../../builder/QueryBuilder'
 import AppError from '../../errors/AppError'
+import { USER_ROLE } from '../User/user.constant'
 import { User } from '../User/user.model'
 import { TClassSchedule } from './classSchedule.interface'
 import { ClassSchedule } from './classSchedule.model'
 
 const createClassScheduleIntoDB = async (payload: TClassSchedule) => {
   try {
-    // Find the trainer
-    const trainer = await User.findById(payload.trainer)
-    if (!trainer) {
-      throw new AppError(httpStatus.NOT_FOUND, 'Trainer not found')
-    }
-
     // Check if 5 classes are already scheduled for the same day
     const scheduledClasses = await ClassSchedule.find({
       scheduleDate: payload.scheduleDate,
@@ -81,6 +77,32 @@ const createClassScheduleIntoDB = async (payload: TClassSchedule) => {
   }
 }
 
+const assigningTrainerIntoClassSchedule = async (
+  trainerId: string,
+  classScheduleId: string,
+) => {
+  const trainer = await User.findById(trainerId)
+  if (!trainer) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Trainer not found')
+  }
+
+  // Check if the user is actually a trainer
+  if (trainer.role !== USER_ROLE.trainer) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'The user is not a trainer')
+  }
+
+  const classSchedule = await ClassSchedule.findById(classScheduleId)
+  if (!classSchedule) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Class schedule not found')
+  }
+
+  // Assign the trainer to the class schedule
+  const trainerObjectId = new mongoose.Types.ObjectId(trainerId)
+  classSchedule.trainer = trainerObjectId
+  const result = await classSchedule.save()
+  return result
+}
+
 const getAllClassScheduleFromDB = async (query: Record<string, unknown>) => {
   const buildingQuery = new QueryBuilder(ClassSchedule.find(), query)
     .filter()
@@ -99,5 +121,6 @@ const getAllClassScheduleFromDB = async (query: Record<string, unknown>) => {
 
 export const ClassScheduleServices = {
   createClassScheduleIntoDB,
+  assigningTrainerIntoClassSchedule,
   getAllClassScheduleFromDB,
 }
