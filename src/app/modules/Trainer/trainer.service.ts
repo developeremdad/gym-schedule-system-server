@@ -2,6 +2,7 @@ import httpStatus from 'http-status'
 import QueryBuilder from '../../builder/QueryBuilder'
 import config from '../../config'
 import AppError from '../../errors/AppError'
+import { ClassSchedule } from '../ClassSchedule/classSchedule.model'
 import { USER_ROLE } from '../User/user.constant'
 import { TUser } from '../User/user.interface'
 import { User } from '../User/user.model'
@@ -44,7 +45,32 @@ const getAllTrainersFromDB = async (query: Record<string, unknown>) => {
   }
 }
 
+const getTrainerClassScheduleFromDB = async (trainerId: string) => {
+  const trainer = await User.findById(trainerId)
+
+  if (!trainer) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Trainer not found')
+  }
+
+  const trainerClassSchedule = await ClassSchedule.find({
+    trainer: trainerId,
+  }).populate('trainees')
+  return trainerClassSchedule
+}
+
+const deleteTrainerIntoDB = async (trainerID: string) => {
+  const trainer = await User.findById(trainerID)
+
+  if (!trainer) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Trainer not found')
+  }
+  const result = await User.deleteOne({ _id: trainer._id })
+  return result
+}
+
 export const TrainerServices = {
   createNewTrainerIntoDB,
   getAllTrainersFromDB,
+  getTrainerClassScheduleFromDB,
+  deleteTrainerIntoDB,
 }

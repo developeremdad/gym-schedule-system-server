@@ -13,11 +13,24 @@ router.post(
   auth(USER_ROLE.admin),
   TrainerControllers.createNewTrainer,
 )
+
+router.get(
+  '/my-class-schedule',
+  auth(USER_ROLE.trainer),
+  TrainerControllers.getTrainerClassSchedule,
+)
+
 router.get(
   '/get-trainers',
   auth(USER_ROLE.admin),
   validateRequest(UserValidation.userValidationSchema),
   TrainerControllers.getAllTrainers,
+)
+
+router.delete(
+  '/:trainerID',
+  auth(USER_ROLE.admin),
+  TrainerControllers.deleteTrainer,
 )
 
 export const TrainerRoutes = router

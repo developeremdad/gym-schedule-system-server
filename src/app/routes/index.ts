@@ -27,10 +27,6 @@ const moduleRoutes = [
     route: TraineeRoutes,
   },
   {
-    path: '/trainees',
-    route: TraineeRoutes,
-  },
-  {
     path: '/classSchedules',
     route: ClassScheduleRoutes,
   },

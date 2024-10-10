@@ -4,6 +4,27 @@ import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { TrainerServices } from './trainer.service'
 
+const createNewTrainer: RequestHandler = catchAsync(async (req, res) => {
+  const result = await TrainerServices.createNewTrainerIntoDB(req.body)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Create new trainer successfully',
+    data: result,
+  })
+})
+
+const getTrainerClassSchedule: RequestHandler = catchAsync(async (req, res) => {
+  const user = req.user
+  const result = await TrainerServices.getTrainerClassScheduleFromDB(user._id)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Trainer class schedule retrieve successfully',
+    data: result,
+  })
+})
+
 const getAllTrainers: RequestHandler = catchAsync(async (req, res) => {
   const result = await TrainerServices.getAllTrainersFromDB(req.query)
   sendResponse(res, {
@@ -15,17 +36,19 @@ const getAllTrainers: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 
-const createNewTrainer: RequestHandler = catchAsync(async (req, res) => {
-  const result = await TrainerServices.createNewTrainerIntoDB(req.body)
+const deleteTrainer: RequestHandler = catchAsync(async (req, res) => {
+  const result = await TrainerServices.deleteTrainerIntoDB(req.params.trainerID)
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Create new trainer successfully',
+    message: 'Delete trainer successfully',
     data: result,
   })
 })
 
 export const TrainerControllers = {
-  getAllTrainers,
   createNewTrainer,
+  getTrainerClassSchedule,
+  getAllTrainers,
+  deleteTrainer,
 }
