@@ -18,8 +18,14 @@ router.patch(
   ClassScheduleControllers.assigningTrainerToClassSchedule,
 )
 
+router.delete(
+  '/:classScheduleId',
+  auth(USER_ROLE.admin),
+  ClassScheduleControllers.deleteClassSchedule,
+)
+
 router.get(
-  '/get-class-schedules',
+  '/',
   auth(USER_ROLE.admin),
   ClassScheduleControllers.getAllClassSchedules,
 )

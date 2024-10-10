@@ -103,6 +103,16 @@ const assigningTrainerIntoClassSchedule = async (
   return result
 }
 
+const deleteClassScheduleIntoDB = async (classScheduleId: string) => {
+  const classSchedule = await ClassSchedule.findById(classScheduleId)
+
+  if (!classSchedule) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Class schedule not found')
+  }
+  const result = await ClassSchedule.deleteOne({ _id: classSchedule })
+  return result
+}
+
 const getAllClassScheduleFromDB = async (query: Record<string, unknown>) => {
   const buildingQuery = new QueryBuilder(ClassSchedule.find(), query)
     .filter()
@@ -122,5 +132,6 @@ const getAllClassScheduleFromDB = async (query: Record<string, unknown>) => {
 export const ClassScheduleServices = {
   createClassScheduleIntoDB,
   assigningTrainerIntoClassSchedule,
+  deleteClassScheduleIntoDB,
   getAllClassScheduleFromDB,
 }
