@@ -5,7 +5,11 @@ import sendResponse from '../../utils/sendResponse'
 import { BookingServices } from './booking.service'
 
 const createNewBooking: RequestHandler = catchAsync(async (req, res) => {
-  const result = await BookingServices.createBookingIntoDB(req.body)
+  const user = req.user
+  const result = await BookingServices.createBookingIntoDB(
+    req.params.classScheduleID,
+    user._id,
+  )
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

@@ -7,7 +7,7 @@ const BookingSchema = new Schema<TBooking>(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'ClassSchedule',
 
-      required: [true, 'ClassSchedule is required'],
+      required: [true, 'Class schedule is required'],
     },
     trainee: {
       type: mongoose.Schema.Types.ObjectId,

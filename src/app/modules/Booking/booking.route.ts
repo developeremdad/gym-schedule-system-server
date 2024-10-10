@@ -6,9 +6,9 @@ import { BookingControllers } from './booking.controller'
 
 const router = express.Router()
 
-router.get(
-  '/create-booking',
-  auth(USER_ROLE.admin),
+router.post(
+  '/create/:classScheduleID',
+  auth(USER_ROLE.trainee),
   BookingControllers.createNewBooking,
 )
 

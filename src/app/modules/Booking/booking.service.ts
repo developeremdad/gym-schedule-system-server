@@ -1,11 +1,13 @@
 import httpStatus from 'http-status'
+import mongoose from 'mongoose'
 import AppError from '../../errors/AppError'
 import { ClassSchedule } from '../ClassSchedule/classSchedule.model'
 import { Booking } from './booking.model'
 
-export const createBookingIntoDB = async (payload: Record<string, unknown>) => {
-  const { classScheduleID, traineeID } = payload
-
+export const createBookingIntoDB = async (
+  classScheduleID: string,
+  traineeID: string,
+) => {
   try {
     // Find the class schedule
     const classSchedule = await ClassSchedule.findById(classScheduleID)
@@ -13,10 +15,13 @@ export const createBookingIntoDB = async (payload: Record<string, unknown>) => {
       throw new AppError(httpStatus.BAD_REQUEST, "'Class schedule not found")
     }
 
-    // // Check if the class is already full
-    // if (classSchedule.trainees.length >= classSchedule.maxTrainees) {
-    //   return res.status(400).json({ message: 'Class is full' })
-    // }
+    // Check if the class is already full
+    if (classSchedule.trainees.length >= classSchedule.maxTrainees) {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        'Class schedule is full. Maximum 10 trainees allowed per schedule.',
+      )
+    }
 
     // Check if the trainee is already booked
     const existingBooking = await Booking.findOne({
@@ -30,18 +35,19 @@ export const createBookingIntoDB = async (payload: Record<string, unknown>) => {
       )
     }
 
-    // Create a new booking
-    const newBooking = new Booking({
+    const bookingData = {
       classSchedule: classScheduleID,
       trainee: traineeID,
-    })
+      trainer: classSchedule.trainer,
+    }
 
-    // Save the booking
-    const result = await newBooking.save()
+    // Create the booking
+    const result = await Booking.create([bookingData])
 
     // Add trainee to the class schedule
-    // classSchedule.trainees.push(traineeID)
-    // await classSchedule.save()
+    const traineeIDObj = new mongoose.Types.ObjectId(traineeID)
+    classSchedule.trainees.push(traineeIDObj)
+    await classSchedule.save()
 
     return result
   } catch (err: any) {
