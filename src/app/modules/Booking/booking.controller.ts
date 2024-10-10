@@ -18,6 +18,17 @@ const createNewBooking: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 
+const cancelBooking: RequestHandler = catchAsync(async (req, res) => {
+  const result = await BookingServices.cancelBookingIntoDB(req.params.bookingID)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Cancel class booking successfully',
+    data: result,
+  })
+})
+
 export const BookingControllers = {
   createNewBooking,
+  cancelBooking,
 }

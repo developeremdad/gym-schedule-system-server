@@ -12,4 +12,10 @@ router.post(
   BookingControllers.createNewBooking,
 )
 
+router.delete(
+  '/:bookingID',
+  auth(USER_ROLE.trainee),
+  BookingControllers.cancelBooking,
+)
+
 export const BookingRoutes = router

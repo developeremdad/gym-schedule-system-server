@@ -64,13 +64,13 @@ const cancelBookingIntoDB = async (bookingID: string) => {
     }
 
     // Remove the trainee from the class schedule
-    // const classSchedule = await ClassSchedule.findById(booking.classSchedule)
-    // if (classSchedule) {
-    //   classSchedule.trainees = classSchedule.trainees.filter(
-    //     (traineeID) => traineeID.toString() !== booking.trainee.toString(),
-    //   )
-    //   await classSchedule.save()
-    // }
+    const classSchedule = await ClassSchedule.findById(booking.classSchedule)
+    if (classSchedule) {
+      classSchedule.trainees = classSchedule.trainees.filter(
+        (traineeID) => traineeID.toString() !== booking.trainee.toString(),
+      )
+      await classSchedule.save()
+    }
 
     // Delete the booking
     const result = await Booking.findByIdAndDelete(bookingID)
