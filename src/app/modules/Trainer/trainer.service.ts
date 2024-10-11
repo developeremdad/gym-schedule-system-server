@@ -29,6 +29,34 @@ const createNewTrainerIntoDB = async (payload: TUser) => {
   }
 }
 
+const getTrainerFromDB = async (trainerID: string) => {
+  const trainer = await User.findById(trainerID)
+  if (!trainer) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Trainer not found')
+  }
+  return trainer
+}
+
+const updateTrainerInDB = async (
+  trainerID: string,
+  updateData: Record<string, any>,
+) => {
+  const trainer = await User.findById(trainerID)
+  if (!trainer) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Trainer not found')
+  }
+
+  const trainerPass = await User.isUserExistsByEmail(trainer?.email)
+
+  trainer.email = updateData.email
+  trainer.fullName = updateData.fullName
+  trainer.password = trainerPass.password
+
+  const result = await trainer.save()
+
+  return result
+}
+
 const getAllTrainersFromDB = async (query: Record<string, unknown>) => {
   const buildingQuery = new QueryBuilder(User.find(), query)
     .filter()
@@ -70,7 +98,9 @@ const deleteTrainerIntoDB = async (trainerID: string) => {
 
 export const TrainerServices = {
   createNewTrainerIntoDB,
+  updateTrainerInDB,
   getAllTrainersFromDB,
+  getTrainerFromDB,
   getTrainerClassScheduleFromDB,
   deleteTrainerIntoDB,
 }

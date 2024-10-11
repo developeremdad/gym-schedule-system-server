@@ -25,6 +25,29 @@ const getTrainerClassSchedule: RequestHandler = catchAsync(async (req, res) => {
   })
 })
 
+const getTrainer: RequestHandler = catchAsync(async (req, res) => {
+  const result = await TrainerServices.getTrainerFromDB(req.params.trainerId)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Trainer is retrieved successfully',
+    data: result,
+  })
+})
+
+const updateTrainer: RequestHandler = catchAsync(async (req, res) => {
+  const result = await TrainerServices.updateTrainerInDB(
+    req.params.trainerId,
+    req.body,
+  )
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Update Trainer successfully',
+    data: result,
+  })
+})
+
 const getAllTrainers: RequestHandler = catchAsync(async (req, res) => {
   const result = await TrainerServices.getAllTrainersFromDB(req.query)
   sendResponse(res, {
@@ -49,6 +72,8 @@ const deleteTrainer: RequestHandler = catchAsync(async (req, res) => {
 export const TrainerControllers = {
   createNewTrainer,
   getTrainerClassSchedule,
+  updateTrainer,
+  getTrainer,
   getAllTrainers,
   deleteTrainer,
 }
