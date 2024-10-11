@@ -147,7 +147,7 @@ The backend system for the **Gym Class Scheduling and Membership Management Syst
 2. **Install dependencies:**
 
    ```bash
-   cd backend
+   cd gym-schedule-system-server
    npm install
    ```
 
@@ -155,7 +155,7 @@ The backend system for the **Gym Class Scheduling and Membership Management Syst
    ```bash
    npm run dev
    ```
-4. **Access the API:** The API will be accessible at http://localhost:5000/.
+4. **Access the API:** The API will be accessible at http://localhost:5000.
 
 # Admin Credentials
 
