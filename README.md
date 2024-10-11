@@ -142,7 +142,7 @@ The backend system for the **Gym Class Scheduling and Membership Management Syst
 
 1. **Clone the repository**:
    ```bash
-   clone the repository
+   git clone https://github.com/developeremdad/gym-schedule-system-server
    ```
 2. **Install dependencies:**
 
@@ -159,11 +159,12 @@ The backend system for the **Gym Class Scheduling and Membership Management Syst
 
 # Admin Credentials
 
-- Email: mdemdadullahahammed@example.com
+- Email: mdemdadullahahammed@gmail.com
 - Password: 12345
 
 # Live Hosting Link
 
-https://devemdad-gym-schedule.vercel.app
+- Server: https://gym-system-server.vercel.app
+- Site Live: https://devemdad-gym-schedule.vercel.app
 
-## Happy Codding 💻
+### Happy Codding 💻
