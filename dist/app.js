@@ -18,7 +18,10 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)({
-    origin: ['http://localhost:5173', 'http://localhost:3000'],
+    origin: [
+        'https://devemdad-gym-schedule.vercel.app',
+        'http://localhost:3000',
+    ],
     credentials: true,
 }));
 // application routes
