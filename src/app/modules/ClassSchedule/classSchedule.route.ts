@@ -26,7 +26,7 @@ router.delete(
 
 router.get(
   '/',
-  auth(USER_ROLE.admin),
+  auth(USER_ROLE.admin, USER_ROLE.trainee),
   ClassScheduleControllers.getAllClassSchedules,
 )
 

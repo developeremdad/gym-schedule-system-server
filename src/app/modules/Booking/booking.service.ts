@@ -2,6 +2,7 @@ import httpStatus from 'http-status'
 import mongoose from 'mongoose'
 import AppError from '../../errors/AppError'
 import { ClassSchedule } from '../ClassSchedule/classSchedule.model'
+import { User } from '../User/user.model'
 import { Booking } from './booking.model'
 
 export const createBookingIntoDB = async (
@@ -98,8 +99,21 @@ const getAllTraineeBookings = async (traineeID: string) => {
   }
 }
 
+const getMyAllBookingFromDB = async (userId: string) => {
+  const user = await User.findById(userId)
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, 'User not found')
+  }
+
+  const bookings = await Booking.find({ trainee: userId }).populate(
+    'classSchedule',
+  )
+  return bookings
+}
+
 export const BookingServices = {
   createBookingIntoDB,
   cancelBookingIntoDB,
   getAllTraineeBookings,
+  getMyAllBookingFromDB,
 }

@@ -12,6 +12,12 @@ router.post(
   BookingControllers.createNewBooking,
 )
 
+router.get(
+  '/my-bookings',
+  auth(USER_ROLE.trainee),
+  BookingControllers.getMyAllBooking,
+)
+
 router.delete(
   '/:bookingID',
   auth(USER_ROLE.trainee),

@@ -15,8 +15,6 @@ const createClassScheduleIntoDB = async (payload: TClassSchedule) => {
       scheduleDate: payload.scheduleDate,
     })
 
-    // console.log(scheduledClasses)
-
     if (scheduledClasses.length >= 5) {
       throw new AppError(
         httpStatus.BAD_REQUEST,
