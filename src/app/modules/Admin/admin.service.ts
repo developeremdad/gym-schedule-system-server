@@ -16,10 +16,10 @@ const createTrainerIntoDB = async (payload: Record<string, unknown>) => {
 
   try {
     // create a user
-    const newUser = await User.create([payload])
+    const newUser = await User.create(payload)
 
     //create a user
-    if (!newUser.length) {
+    if (!newUser) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to register user')
     }
 

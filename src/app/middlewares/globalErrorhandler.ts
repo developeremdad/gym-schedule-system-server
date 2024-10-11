@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-vars */
 import { ErrorRequestHandler } from 'express'
 import { ZodError } from 'zod'
-import config from '../config'
 import AppError from '../errors/AppError'
 import handleCastError from '../errors/handleCastError'
 import handleDuplicateError from '../errors/handleDuplicateError'
@@ -60,19 +59,11 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     ]
   }
 
-  // Save the error to the database
-  const errorData = {
-    message,
-    stackTrace: config.NODE_ENV === 'development' ? err?.stack : null,
-  }
-
   //ultimate return
   return res.status(statusCode).json({
     success: false,
     message,
     errorDetails,
-    err,
-    stack: config.NODE_ENV === 'development' ? err?.stack : null,
   })
 }
 

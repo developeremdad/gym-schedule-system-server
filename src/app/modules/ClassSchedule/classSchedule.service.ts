@@ -70,7 +70,7 @@ const createClassScheduleIntoDB = async (payload: TClassSchedule) => {
     payload.endTime = String(endTime)
 
     // Continue to create the class schedule in the database
-    const result = await ClassSchedule.create([payload])
+    const result = await ClassSchedule.create(payload)
     return result
   } catch (err: any) {
     throw new Error(err.message || 'Error creating class schedule')

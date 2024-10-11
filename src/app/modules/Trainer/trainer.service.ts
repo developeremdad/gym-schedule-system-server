@@ -13,10 +13,10 @@ const createNewTrainerIntoDB = async (payload: TUser) => {
   payload.role = USER_ROLE.trainer
   try {
     // create a user as a trainer
-    const newUser = await User.create([payload])
+    const newUser = await User.create(payload)
 
     //create a user
-    if (!newUser.length) {
+    if (!newUser) {
       throw new AppError(
         httpStatus.BAD_REQUEST,
         'Failed to create new trainer user',
