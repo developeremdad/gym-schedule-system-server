@@ -16,6 +16,12 @@ The backend system for the **Gym Class Scheduling and Membership Management Syst
 
 ---
 
+## **ER Diagram**
+
+Below is the Entity Relationship (ER) Diagram for the system:
+
+![ER Diagram](./ER-diagram-gym-schedule-management.png)
+
 ## **API Endpoints**
 
 ### **Authentication**
